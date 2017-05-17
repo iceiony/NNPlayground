@@ -16,9 +16,9 @@ pyTorch <- read.csv('./pytorch/cpu.csv') %>% mean_errors
 #dynet_gpu <- read.csv('./dynet/gpu.csv') %>% mean_errors
 #pyTorch_gpu <- read.csv('./pytorch/gpu.csv') %>% mean_errors
 
-#dynet$type = 'dynet-cpu'
+dynet$type = 'dynet'
+pyTorch$type = 'pyTorch'
 #dynet_gpu$type = 'dynet-gpu'
-#pyTorch$type = 'pyTorch'
 #pyTorch_gpu$type = 'pyTorch-gpu'
 
 dat <- rbind(dynet, pyTorch)
