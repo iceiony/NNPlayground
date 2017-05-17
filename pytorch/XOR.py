@@ -1,5 +1,5 @@
-CUDA = True
-OUTPUT_FILE = 'gpu.csv'
+CUDA = False
+OUTPUT_FILE = 'cpu.csv'
 MAX_ITTERATION = 500
 
 import matplotlib.pyplot as plt
@@ -14,7 +14,7 @@ class MLPXOR(nn.Module):
         super(MLPXOR, self).__init__()
         self.l1 = nn.Linear(2, 2)
         self.l2 = nn.Linear(2, 1)
-        # use normal distribution
+        # use normal distribution weights as in dynet
         self.l1.weight.data.normal_()
         self.l2.weight.data.normal_()
 
