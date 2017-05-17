@@ -1,4 +1,6 @@
 CUDA = True
+OUTPUT_FILE = 'gpu.csv'
+MAX_ITTERATION = 500
 
 import matplotlib.pyplot as plt
 import torch
@@ -21,32 +23,44 @@ class MLPXOR(nn.Module):
         x = F.sigmoid(self.l2(x))
         return x
 
-data_in = torch.Tensor([[0, 0],
-                        [0, 1],
-                        [1, 0],
-                        [1, 1]])
-data_out = torch.Tensor([0, 1, 1, 0]).resize_(4, 1)
+def run_model():
+    data_in = torch.Tensor([[0, 0],
+                            [0, 1],
+                            [1, 0],
+                            [1, 1]])
+    data_out = torch.Tensor([0, 1, 1, 0]).resize_(4, 1)
 
-net = MLPXOR()
+    net = MLPXOR()
+    if CUDA and torch.cuda.is_available():
+        net = net.cuda()
+        data_in = data_in.cuda()
+        data_out = data_out.cuda()
+
+    inputs = Variable(data_in)
+    labels = Variable(data_out)
+    criterion = nn.BCELoss()
+    optimizer = optim.SGD(net.parameters(), lr=1.0)
+    errors = []
+    for i in range(1, MAX_ITTERATION):
+        optimizer.zero_grad()
+        loss = criterion(net(inputs), labels)
+        errors.append(loss.data.select(0, 0))
+        loss.backward()
+        optimizer.step()
+    return errors
 
 if CUDA and torch.cuda.is_available():
-    net = net.cuda()
-    data_in = data_in.cuda()
-    data_out = data_out.cuda()
-    print('Running on the GPU')
+    print('GPU run')
+else:
+    print('CPU run')
 
-inputs = Variable(data_in)
-labels = Variable(data_out)
-criterion = nn.BCELoss()
-optimizer = optim.SGD(net.parameters(), lr=1.0)
-errors = []
-for i in range(1, 500):
-    optimizer.zero_grad()
-    loss = criterion(net(inputs), labels)
-    errors.append(loss.data.select(0, 0))
-    loss.backward()
-    optimizer.step()
+f = open(OUTPUT_FILE,'w')
+print('Train errors: ')
+for i in range(100):
+    errors = run_model()
+    print(', '.join(map(str,errors)), file = f)
+    print(errors[-1])
+f.close()
 
-print('Train error ', loss)
 plt.plot(errors)
 plt.savefig('error.png')
