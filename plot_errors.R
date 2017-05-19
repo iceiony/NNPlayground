@@ -11,19 +11,24 @@ mean_errors <- function(x){
     res
 }
 
-dynet <- read.csv('./dynet/cpu.csv') %>% mean_errors
+dynet   <- read.csv('./dynet/cpu.csv')   %>% mean_errors
 pyTorch <- read.csv('./pytorch/cpu.csv') %>% mean_errors
-#dynet_gpu <- read.csv('./dynet/gpu.csv') %>% mean_errors
+chainer <- read.csv('./chainer/cpu.csv') %>% mean_errors
+#dynet_gpu   <- read.csv('./dynet/gpu.csv')   %>% mean_errors
 #pyTorch_gpu <- read.csv('./pytorch/gpu.csv') %>% mean_errors
+#chainer_gpu <- read.csv('./chainer/gpu.csv') %>% mean_errors
 
-dynet$type = 'dynet'
+dynet$type   = 'dynet'
 pyTorch$type = 'pyTorch'
-#dynet_gpu$type = 'dynet-gpu'
+chainer$type = 'chainer' 
+#dynet_gpu$type   = 'dynet-gpu'
 #pyTorch_gpu$type = 'pyTorch-gpu'
+#chainer_gpu$type = 'chainer-gpu'
 
-dat <- rbind(dynet, pyTorch)
+dat <- rbind(dynet, pyTorch, chainer)
 #dat <- rbind(dynet, dynet_gpu)
 #dat <- rbind(pyTorch, pyTorch_gpu)
+#dat <- rbind(chainer, chainer_gpu)
 
 # Make the plot
 plt <- ggplot(data = dat, aes(x = .id, y = mean, ymin = mean - se, ymax = mean + se, fill = type, linetype = type)) + 
@@ -32,4 +37,4 @@ plt <- ggplot(data = dat, aes(x = .id, y = mean, ymin = mean - se, ymax = mean +
         ylab('Learning error') +
         xlab('itteration')
 print(plt)
-ggsave('pyTorch.png')
+ggsave('cpu.png')
