@@ -1,13 +1,13 @@
 Summary
 =======
-Benchmark and verity different dynamic networks for a standard XOR problem
-Currently known frameworks are : dynet, chainer, pyTorch
+Equivalent implementation of XOR in dynamic Neural Network frameworks.
+Currently known frameworks are: dynet, chainer, pyTorch
 
-Observations
-============
-For the small XOR problem, dynet has the fastest computation time for both CPU and GPU.
-Tests run on [dynet-benchmarks](https://github.com/neulab/dynet-benchmark) show pyTorch as significantly faster.
-
-However, when verifying the correctness of implementation, we observe that pyTorch does not converge as fast as dynet does.
-This occurs in a situation where XOR implementations are parameterized the same for both dynet and Torch.
-
+Details (Network and Training)
+==============================
+IN -> linear(2X2) -> sigmoid -> linear(2X1) -> sigmoid -> OUT
+Optimizer: SGD, with learning rate 1 
+Loss Fun : binary cross entropy
+Weigths : initialised from normal distribution (sigma = 1)
+Training : 500 itterations 
+Plots : mean training (with standard error) for a 100 training runs
