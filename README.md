@@ -1,6 +1,6 @@
 Summary
 =======
-Equivalent implementation of XOR in dynamic Neural Network frameworks.  
+Equivalent implementations of XOR in dynamic Neural Network frameworks.  
 Currently known frameworks are: dynet, chainer, pyTorch.
 
 Details (Network and Training)
