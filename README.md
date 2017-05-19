@@ -10,4 +10,4 @@ Optimizer: SGD, with learning rate 1
 Loss Fun : binary cross entropy  
 Weigths : initialised from normal distribution (sigma = 1)  
 Training : 500 itterations  
-Plots : mean training (with standard error) for a 100 training runs  
+Plots : mean training (with standard error) for 100 training runs  
