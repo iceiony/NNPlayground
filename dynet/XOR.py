@@ -1,5 +1,5 @@
 ITERATIONS = 500
-OUTPUT_FILE = 'gpu.csv'
+OUTPUT_FILE = 'cpu.csv'
 
 import matplotlib.pyplot as plt
 import dynet as dy
