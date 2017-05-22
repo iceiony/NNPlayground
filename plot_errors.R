@@ -12,21 +12,22 @@ mean_errors <- function(x){
 }
 
 dynet   <- read.csv('./dynet/cpu.csv')   %>% mean_errors
-pyTorch <- read.csv('./pytorch/cpu.csv') %>% mean_errors
-chainer <- read.csv('./chainer/cpu.csv') %>% mean_errors
-#dynet_gpu   <- read.csv('./dynet/gpu.csv')   %>% mean_errors
+#pyTorch <- read.csv('./pytorch/cpu.csv') %>% mean_errors
+#chainer <- read.csv('./chainer/cpu.csv') %>% mean_errors
+dynet_gpu   <- read.csv('./dynet/gpu.csv')   %>% mean_errors
 #pyTorch_gpu <- read.csv('./pytorch/gpu.csv') %>% mean_errors
 #chainer_gpu <- read.csv('./chainer/gpu.csv') %>% mean_errors
 
 dynet$type   = 'dynet'
-pyTorch$type = 'pyTorch'
-chainer$type = 'chainer' 
-#dynet_gpu$type   = 'dynet-gpu'
+#pyTorch$type = 'pyTorch'
+#chainer$type = 'chainer' 
+dynet_gpu$type   = 'dynet-gpu'
 #pyTorch_gpu$type = 'pyTorch-gpu'
 #chainer_gpu$type = 'chainer-gpu'
 
-dat <- rbind(dynet, pyTorch, chainer)
-#dat <- rbind(dynet, dynet_gpu)
+#dat <- rbind(dynet, pyTorch, chainer)
+#dat <- rbind(dynet_gpu, pyTorch_gpu, chainer_gpu)
+dat <- rbind(dynet, dynet_gpu)
 #dat <- rbind(pyTorch, pyTorch_gpu)
 #dat <- rbind(chainer, chainer_gpu)
 

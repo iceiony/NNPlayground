@@ -31,7 +31,7 @@ def run_model():
         x = dy.inputTensor(data_in, batched=True)
         y = dy.inputTensor(data_out, batched=True)
 
-        h = dy.tanh((W*x) + b)
+        h = dy.logistic((W*x) + b)
         y_pred = dy.logistic((V*h) + a)
         loss = dy.binary_log_loss(y_pred, y)
 
