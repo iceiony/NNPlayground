@@ -3,9 +3,8 @@ OUTPUT_FILE = 'cpu.csv'
 MAX_ITTERATION = 500
 
 import matplotlib.pyplot as plt
-import torch
+import torch as t
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
 from torch.autograd import Variable
 
@@ -19,19 +18,19 @@ class MLPXOR(nn.Module):
         self.l2.weight.data.normal_()
 
     def forward(self, x):
-        x = F.sigmoid(self.l1(x))
-        x = F.sigmoid(self.l2(x))
+        x = t.sigmoid(self.l1(x))
+        x = t.sigmoid(self.l2(x))
         return x
 
 def run_model():
-    data_in = torch.Tensor([[0, 0],
+    data_in = t.Tensor([[0, 0],
                             [0, 1],
                             [1, 0],
                             [1, 1]])
-    data_out = torch.Tensor([0, 1, 1, 0]).resize_(4, 1)
+    data_out = t.Tensor([0, 1, 1, 0]).resize_(4, 1)
 
     net = MLPXOR()
-    if CUDA and torch.cuda.is_available():
+    if CUDA and t.cuda.is_available():
         net = net.cuda()
         data_in = data_in.cuda()
         data_out = data_out.cuda()
@@ -44,12 +43,12 @@ def run_model():
     for i in range(1, MAX_ITTERATION):
         optimizer.zero_grad()
         loss = criterion(net(inputs), labels)
-        errors.append(loss.data.select(0, 0))
+        errors.append(loss.data.numpy())
         loss.backward()
         optimizer.step()
     return errors
 
-if CUDA and torch.cuda.is_available():
+if CUDA and t.cuda.is_available():
     print('GPU run')
 else:
     print('CPU run')
