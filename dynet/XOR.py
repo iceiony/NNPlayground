@@ -41,12 +41,12 @@ f = open(OUTPUT_FILE,'w')
 print("Training Error: ")
 for i in range(100):
     errors = run_model()
-    print(', '.join(map(str,errors)), file = f)
+    #print(', '.join(map(str,errors)), file = f)
     #print(errors[-1])
-    if i % 10 == 1:
-        print( i , '%')
+    #if i % 10 == 1:
+    #    print( i , '%')
 
 f.close()
 
-plt.plot(errors)
-plt.savefig('error.png')
+#plt.plot(errors)
+#plt.savefig('error.png')
