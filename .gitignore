@@ -1,2 +1,4 @@
 .idea
 .ropeproject
+build
+.DS_store

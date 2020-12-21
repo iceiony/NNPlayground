@@ -39,7 +39,7 @@ def run_model():
 
 f = open(OUTPUT_FILE,'w')
 print("Training Error: ")
-for i in range(100):
+for i in range(1000):
     errors = run_model()
     #print(', '.join(map(str,errors)), file = f)
     #print(errors[-1])
