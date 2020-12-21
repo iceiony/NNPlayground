@@ -37,7 +37,7 @@ def run_model():
         sgd.update()
     return errors
 
-f = open(OUTPUT_FILE,'w')
+#f = open(OUTPUT_FILE,'w')
 print("Training Error: ")
 for i in range(1000):
     errors = run_model()
@@ -46,7 +46,7 @@ for i in range(1000):
     #if i % 10 == 1:
     #    print( i , '%')
 
-f.close()
+#f.close()
 
 #plt.plot(errors)
 #plt.savefig('error.png')

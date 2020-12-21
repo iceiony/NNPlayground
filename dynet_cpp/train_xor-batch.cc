@@ -26,11 +26,6 @@ float run_model(){
   p_V = m.add_parameters({1, HIDDEN_SIZE});
   p_a = m.add_parameters({1});
 
-  Expression W = parameter(cg, p_W);
-  Expression b = parameter(cg, p_b);
-  Expression V = parameter(cg, p_V);
-  Expression a = parameter(cg, p_a);
-
   // set x_values to change the inputs to the network
   Dim x_dim({2}, 4), y_dim({1}, 4);
 
@@ -40,23 +35,28 @@ float run_model(){
                                   0.0, 1.0,
                                   0.0, 0.0};
 
-  Expression x = input(cg, x_dim, &x_values);
-  Expression y = input(cg, y_dim, &y_values);
-
-  Expression h = logistic(W * x + b);
-  Expression y_pred = logistic( V * h + a);
-
-  y_pred = reshape(y_pred, Dim({4}, 1));
-  y = reshape(y, Dim({4}, 1));
-
-  Expression loss = binary_log_loss(y_pred, y);
-  
-  Expression sum_loss = sum_batches(loss);
-
   float my_loss = 1000;
   for (unsigned iter = 0; iter < ITERATIONS; ++iter) {
-    my_loss = as_scalar(cg.forward(sum_loss)) / 4;
-    cg.backward(sum_loss);
+    cg.clear();
+
+    Expression W = parameter(cg, p_W);
+    Expression b = parameter(cg, p_b);
+    Expression V = parameter(cg, p_V);
+    Expression a = parameter(cg, p_a);
+
+    Expression x = input(cg, x_dim, &x_values);
+    Expression y = input(cg, y_dim, &y_values);
+
+    Expression h = logistic(W * x + b);
+    Expression y_pred = logistic( V * h + a);
+
+    y_pred = reshape(y_pred, Dim({4}, 1));
+    y = reshape(y, Dim({4}, 1));
+
+    Expression loss = binary_log_loss(y_pred, y);
+
+    my_loss = as_scalar(cg.forward(loss)) / 4;
+    cg.backward(loss);
     trainer.update();
     //cerr << "E = " << my_loss << endl;
   }
